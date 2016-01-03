@@ -1,0 +1,13 @@
+{
+  "name": "grab",
+  "description": "Hacky as you like web scraper",
+  "version": "0.0.1",
+  "homepage": "https://github.com/coffeerings/porsche",
+  "license": "Apache-2.0",
+  "files": ["../"],
+  "repository" : { "type" : "git", "url" : "https://github.com/coffeerings/porsche.git"},
+  "dependencies": {
+    "jsdom": "6.2.0",
+    "mysql": "2.3.0"
+  }
+}
