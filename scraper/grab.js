@@ -79,8 +79,10 @@ function insert_cars(cars, url){
             connection.query('INSERT INTO cars SET ?', cars[i], function(err, result) {
                 if(err){
                     console.log(err);
-                }   
+                    return;
+                }
             });
+            console.log("Inserted: " + cars[i].ref + ": " + cars[i].title);
         }
         connection.end();
     });
