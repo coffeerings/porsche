@@ -1,6 +1,9 @@
 var jsdom = require('jsdom'), 
     mysql = require('mysql'),
-    config = require('./config');
+    config = require('./config'),
+    fs = require("fs");
+
+var jquery = fs.readFileSync("./node_modules/jquery/dist/jquery.min.js", "utf-8");
 
 function getQueryParams(qs) {
     qs = qs.split("+").join(" ");
@@ -20,9 +23,9 @@ function get_cars(url, callback){
     
     jsdom.env({
         url: url,
-        scripts: ['http://code.jquery.com/jquery.js'],
+        src: [jquery],
         done: function(err, window){
-            var $ = window.jQuery;
+            var $ = window.$;
             var cars = [];
 
             if(query_param.hasOwnProperty("M")){
