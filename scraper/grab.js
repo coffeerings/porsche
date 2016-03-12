@@ -3,7 +3,7 @@ var jsdom = require('jsdom'),
     config = require('./config'),
     fs = require("fs");
 
-var jquery = fs.readFileSync("./node_modules/jquery/dist/jquery.min.js", "utf-8");
+var jquery = fs.readFileSync(__dirname + "./node_modules/jquery/dist/jquery.min.js", "utf-8");
 
 function getQueryParams(qs) {
     qs = qs.split("+").join(" ");
