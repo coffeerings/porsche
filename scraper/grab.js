@@ -85,7 +85,7 @@ function insert_cars(cars, url){
                     return;
                 }
             });
-            console.log("Inserted: " + cars[i].ref + ": " + cars[i].title);
+            console.log("Inserted: " + cars[i].ref + ": " + cars[i].title + " - " + cars[i].price);
         }
         connection.end();
     });
@@ -93,6 +93,20 @@ function insert_cars(cars, url){
 
 // Porsche 997/991 models with most variants
 var urls = [
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=525&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=525&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=249&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=249&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=249&Page=3&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=222&M=1161&M=1311&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=222&M=1161&M=1311&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=222&M=1161&M=1311&Page=3&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=301&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=301&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=315&M=321&M=1036&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=315&M=321&M=1036&Page=2&ResultsPerPage=100',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=1047&Page=1&ResultsPerPage=100&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=1047&Page=2&ResultsPerPage=100&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=506&Page=1&ResultsPerPage=100&isExperiment=True',
@@ -108,7 +122,9 @@ var urls = [
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=1400&Page=3&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=1400&Page=4&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=2502&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
-    'http://www.pistonheads.com/classifieds?Category=used-cars&M=2501&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True'
+    'http://www.pistonheads.com/classifieds?Category=used-cars&M=2501&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&Page=2&ResultsPerPage=100',
  ];
 
 // loop through urls with a 2 sec break between each call to scrape the site
