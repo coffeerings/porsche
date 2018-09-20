@@ -65,33 +65,46 @@ function insert_cars(cars, url){
 
     var cars = cars;
 
-    var connection = mysql.createConnection({
-        host     : config.mysql.host,
-        port     : config.mysql.port,
+    var pool  = mysql.createPool({
+        connectionLimit : 50,
+        connectTimeout  : 60 * 60 * 1000,
+        aquireTimeout   : 60 * 60 * 1000,
+        timeout         : 60 * 60 * 1000,
+        waitForConnections : true,
         user     : config.mysql.user,
         password : config.mysql.password,
-        database : config.mysql.database
+        database : config.mysql.database,
+        socketPath : config.mysql.socketPath
     });
-    connection.connect(function(err) {
-        if (err) {
-            console.error('error connecting: ' + err.stack);
-            return;
-        }
 
-        for(i = 0; i < cars.length; i++) { 
-            connection.query('INSERT INTO cars SET ?', cars[i], function(err, result) {
-                if(err){
-                    console.log(err);
-                    return;
+    pool.getConnection(function(err, connection) {
+        if (err) throw err;
+        connection.beginTransaction(function(err) {
+            if (err) throw err;
+            for(i = 0; i < cars.length; i++) {
+                connection.query('INSERT INTO cars SET ?', cars[i], function(err, result) {
+                    if(err){
+                        return connection.rollback(function() {
+                            throw error;
+                        });
+                        return;
+                    }
+                });
+                console.log("Inserted: " + cars[i].ref + ": " + cars[i].title + " - " + cars[i].price);
+            }
+            connection.commit(function(err) {
+                if (err) {
+                  return connection.rollback(function() {
+                    throw err;
+                  });
                 }
+                console.log('success!');
             });
-            console.log("Inserted: " + cars[i].ref + ": " + cars[i].title + " - " + cars[i].price);
-        }
-        connection.end();
+        });
     });
 }
 
-// Porsche 997/991 models with most variants
+// Porsche 997/991 models with most variants. M3, R8, RS4 and GTR also added 
 var urls = [
     'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&ResultsPerPage=100',
     'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&Page=2&ResultsPerPage=100',
@@ -124,14 +137,14 @@ var urls = [
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=2502&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=2501&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&ResultsPerPage=100',
-    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&Page=2&ResultsPerPage=100'
  ];
 
-// loop through urls with a 2 sec break between each call to scrape the site
+// loop through urls with a 30 sec break between each call to scrape the site
 for(i = 0; i < urls.length; i++) { 
     (function(i){
         setTimeout(function(){
             get_cars(urls[i], insert_cars);
-        }, 2000 * i);
+        }, 30000 * i);
     }(i));
 }
