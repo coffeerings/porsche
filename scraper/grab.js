@@ -137,7 +137,9 @@ var urls = [
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=2502&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'http://www.pistonheads.com/classifieds?Category=used-cars&M=2501&Page=1&ResultsPerPage=100&SortOptions=ModifiedDate&isExperiment=True',
     'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&ResultsPerPage=100',
-    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&Page=2&ResultsPerPage=100'
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=234&Page=2&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=1162&ResultsPerPage=100',
+    'https://www.pistonheads.com/classifieds?Category=used-cars&M=1162&ResultsPerPage=100'
  ];
 
 // loop through urls with a 30 sec break between each call to scrape the site
