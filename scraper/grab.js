@@ -37,11 +37,7 @@ function fetch(page){
   });
 }
 
-var pages = [
-  'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&ResultsPerPage=10',
-  'https://www.pistonheads.com/classifieds?Category=used-cars&M=2898&Page=2&ResultsPerPage=10',
-  'https://www.pistonheads.com/classifieds?Category=used-cars&M=525&ResultsPerPage=10'
-];
+const pages = require("./pages.json");
 
 (async function loop() {
   for (let i = 0; i < pages.length; i++) {
