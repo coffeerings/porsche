@@ -1,1 +1,0 @@
-Scraper readme, take a gander at the project readme.

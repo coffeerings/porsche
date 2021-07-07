@@ -2,7 +2,22 @@ const fs = require('fs');
 const got = require('got');
 const jsdom = require("jsdom");
 const url = require('url');
+const mysql = require('mysql2');
 const { JSDOM } = jsdom;
+
+const pages = require("./config.pages.json");
+
+var con = mysql.createConnection({
+  user: process.env.MYSQL_USERNAME,
+  password : process.env.MYSQL_PASSWORD,
+  database : process.env.MYSQL_DATABASE,
+  host : process.env.MYSQL_HOSTNAME
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 function fetch(page){
   got(page).then(response => {
@@ -37,11 +52,22 @@ function fetch(page){
   });
 }
 
-const pages = require("./pages.json");
+function job(jobId){
+  console.log("Running job: " + jobId);
+  (async function loop() {
+    for (let i = 0; i < pages.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, Math.random() * 2000));
+      console.log("Fetching Page: " + i + ", jobId: " + jobId + ", " + pages[i]);
+      //fetch(pages[i]);
+    }
+  })();
+}
 
 (async function loop() {
-  for (let i = 0; i < pages.length; i++) {
-    await new Promise(resolve => setTimeout(resolve, Math.random() * 5000));
-    fetch(pages[i]);
+  let i = 0;
+  while (true) {
+    await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * (10000 - 8000 + 1000) + 8000)));
+    job(i);
+    i++;
   }
 })();

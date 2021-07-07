@@ -1,0 +1,51 @@
+version: '3.0'
+services:
+  scraper:
+    build:
+      context: ./
+      dockerfile: ./docker/node/Dockerfile
+    command: node grab.js
+    ports:
+      - "80:80"
+    links: 
+      - db
+    environment:
+      MYSQL_HOSTNAME: db
+    env_file:
+      - db-variables.env
+    volumes: 
+      - ./scraper:/usr/app
+  analytics:
+    image: metabase/metabase
+    ports:
+      - "3000:3000"
+    links: 
+      - db
+    volumes:
+      - ./analytics:/metabase-data
+    environment:
+      - MB_DB_FILE=/metabase-data/metabase.db
+  db:
+    image: mysql:8
+    command: '--default-authentication-plugin=mysql_native_password'
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./sql:/home
+    env_file:
+      - db-variables.env
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password    
+volumes:
+  db-data: 
